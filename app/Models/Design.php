@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class Design extends Model
 {
     use Taggable;
-    
+
     protected $fillable = [
         'user_id',
         'team_id',
