@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
@@ -34,6 +35,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     protected $hidden = ['password', 'remember_token'];
     protected $spatialFields = ['location'];
     protected $casts = ['email_verified_at' => 'datetime'];
+    protected $appends = [
+        'photo_url'
+    ];
 
     public function getJWTIdentifier() {
         return $this->getKey();
@@ -52,4 +56,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         $this->notify(new ResetPassword($token));
     }
+
+    public function getPhotoUrlAttribute()
+    {
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    public function designs()
+    {
+        return $this->hasMany(Design::class);
+    }
+
 }
