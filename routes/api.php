@@ -10,6 +10,10 @@ Route::get('designs', 'Designs\DesignController@index');
 Route::get('designs/{id}', 'Designs\DesignController@find_design');
 Route::get('designs/slug/{slug}', 'Designs\DesignController@find_by_slug');
 
+// get users
+Route::get('users', 'User\UserController@index');
+Route::get('users/{id}/designs', 'Designs\DesignController@show');
+Route::get('user/{username}', 'User\UserController@find_by_username');
 
 Route::group(['middleware' => ['guest:api']], function () {
     // authentication routes

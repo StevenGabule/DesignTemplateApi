@@ -93,4 +93,10 @@ class DesignController extends Controller
         $design = $this->designs->withCriteria([new IsLive()])->findWhereFirst('slug', $slug);
         return new DesignResource($design);
     }
+
+    public function show($id)
+    {
+        $designs = $this->designs->withCriteria([new IsLive()])->findWhere('user_id', $id);
+        return DesignResource::collection($designs);
+    }
 }
