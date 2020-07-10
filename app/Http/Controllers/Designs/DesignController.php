@@ -99,4 +99,17 @@ class DesignController extends Controller
         $designs = $this->designs->withCriteria([new IsLive()])->findWhere('user_id', $id);
         return DesignResource::collection($designs);
     }
+
+    public function like($id)
+    {
+        $total = $this->designs->like($id);
+        return response()->json(['message' => 'Successful', 'total' => $total], 200);
+    }
+
+    public function check_if_like_has_liked($designId)
+    {
+        $isLiked = $this->designs->isLikedByUser($designId);
+        return response()->json(['liked' => $isLiked], 200);
+    }
+
 }
