@@ -20,7 +20,8 @@ class DesignRepository extends BaseRepository implements IDesign
 
     public function addComment($designId, array $data)
     {
-        // TODO: Implement addComment() method.
+        $design = $this->find($designId);
+        return $design->comments()->create($data);
     }
 
     public function like($id)

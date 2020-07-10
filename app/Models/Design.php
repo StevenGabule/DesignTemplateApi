@@ -49,4 +49,9 @@ class Design extends Model
         return Storage::disk($this->disk)->url("uploads/designs/{$size}/".$this->image);
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->orderBy('created_at', 'asc');
+    }
+
 }
